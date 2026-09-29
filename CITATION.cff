@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: >
+  If you use this software, please cite both the paper and the archived
+  software release below.
+title: >
+  xHuBERT: A Selective Layer Aggregation Framework for Robust
+  Speaker-Independent Speech Emotion Recognition
+type: software
+version: 1.0.0
+date-released: "2026-09-29"
+authors:
+  - family-names: Nguyen
+    given-names: Tan Nhu
+    email: nhunet@gmail.com
+    affiliation: Industrial University of Ho Chi Minh City
+  - family-names: Bui
+    given-names: Thanh Hung
+    email: buithanhhung@iuh.edu.vn
+    affiliation: Industrial University of Ho Chi Minh City
+repository-code: "https://github.com/nhunet/xHuBERT"
+license: MIT
+keywords:
+  - speech emotion recognition
+  - HuBERT
+  - self-supervised learning
+  - selective layer aggregation
+  - attention pooling
+  - speaker-independent evaluation
+  - RAVDESS
+  - gradient reversal
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.XXXXXXX
+    description: Zenodo archive of this release (replace with real DOI after first Zenodo publish)
+preferred-citation:
+  type: article
+  title: >
+    xHuBERT: A Selective Layer Aggregation Framework for Robust
+    Speaker-Independent Speech Emotion Recognition
+  authors:
+    - family-names: Nguyen
+      given-names: Tan Nhu
+    - family-names: Bui
+      given-names: Thanh Hung
+  year: 2026
+  journal: "Under review"

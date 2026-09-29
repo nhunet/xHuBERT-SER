@@ -1,0 +1,38 @@
+{
+  "title": "xHuBERT: A Selective Layer Aggregation Framework for Robust Speaker-Independent Speech Emotion Recognition",
+  "upload_type": "software",
+  "description": "<p>Official implementation of the paper <em>xHuBERT: A Selective Layer Aggregation Framework for Robust Speaker-Independent Speech Emotion Recognition</em>.</p><p>xHuBERT combines a HuBERT-base backbone with Selective Layer Aggregation (SLA) over all 13 hidden states, Attention Pooling (AP), and a 256-dimensional emotion embedding, fine-tuned end-to-end with optional speaker-adversarial regularisation. The framework is evaluated on the RAVDESS speech corpus under both 5-fold Stratified Cross-Validation and a Leave-One-Speaker-Group-Out (LOSGO) protocol.</p><p>The repository includes the full training pipeline, eight experimental scripts corresponding to every table and figure in the paper, seven Colab notebooks, and the raw CSV results used to produce the reported numbers.</p>",
+  "creators": [
+    {
+      "name": "Nguyen, Tan Nhu",
+      "affiliation": "Industrial University of Ho Chi Minh City"
+    },
+    {
+      "name": "Bui, Thanh Hung",
+      "affiliation": "Industrial University of Ho Chi Minh City"
+    }
+  ],
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+    "speech emotion recognition",
+    "HuBERT",
+    "self-supervised learning",
+    "selective layer aggregation",
+    "attention pooling",
+    "speaker-independent evaluation",
+    "RAVDESS",
+    "gradient reversal layer"
+  ],
+  "communities": [
+    {"identifier": "zenodo"}
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.1188976",
+      "relation": "isDerivedFrom",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ]
+}
