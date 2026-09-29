@@ -17,7 +17,7 @@ authors:
     given-names: Thanh Hung
     email: buithanhhung@iuh.edu.vn
     affiliation: Industrial University of Ho Chi Minh City
-repository-code: "https://github.com/nhunet/xHuBERT"
+repository-code: "https://github.com/nhunet/xHuBERT-SER"
 license: MIT
 keywords:
   - speech emotion recognition

@@ -28,7 +28,7 @@ Key results on RAVDESS (speech-only, 1,440 utterances, 24 actors, 8 emotions):
 ## Repository Structure
 
 ```
-xHuBERT/
+xHuBERT-SER/
 ├── config.py                    # Central hyperparameters and paths
 ├── data.py                      # RAVDESS dataset loader (16 kHz / 22.05 kHz)
 ├── features.py                  # MFCC, LogMel, LPCC, Chroma, Prosody, Statistical
@@ -86,8 +86,8 @@ All exact package versions used to produce the paper numbers are listed in [`req
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/nhunet/xHuBERT.git
-cd xHuBERT
+git clone https://github.com/nhunet/xHuBERT-SER.git
+cd xHuBERT-SER
 
 python -m venv .venv
 # Windows: .venv\Scripts\activate
