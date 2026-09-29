@@ -21,7 +21,8 @@ Usage
     python scripts/regenerate_paper_figures.py --seed 42
 
 Outputs are written to ``${XHUBERT_SAVE_DIR}/figures/`` as
-``fig_sla_layer_weights.png`` and ``fig_confusion_hubert_finetune.png``.
+``hubert_ft_layer_weights.png`` and ``confusion_hubert_finetune.png`` —
+the exact filenames referenced by ``paper/main.tex``.
 """
 
 from __future__ import annotations
@@ -53,7 +54,7 @@ def regenerate_fig6(seed: int) -> bool:
 
     weights = np.stack([np.load(f) for f in files], axis=0)
     mean_w = weights.mean(axis=0)
-    plot_sla_layer_weights(mean_w, filename="fig_sla_layer_weights.png")
+    plot_sla_layer_weights(mean_w, filename="hubert_ft_layer_weights.png")
     print(f"[INFO] Averaged {len(files)} folds; peak layer = {int(mean_w.argmax())}")
     return True
 
@@ -116,7 +117,7 @@ def regenerate_fig9(seed: int) -> bool:
     plot_confusion_matrix(
         y_true, y_pred,
         title="Confusion matrix — xHuBERT fine-tuned (LOSGO, 6-fold aggregate)",
-        filename="fig_confusion_hubert_finetune.png",
+        filename="confusion_hubert_finetune.png",
         normalize=True,
         acc=metrics["accuracy"], f1=metrics["f1_macro"],
     )
