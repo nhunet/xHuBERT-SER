@@ -147,6 +147,18 @@ Each experiment maps to one or more paper tables/figures:
 
 For a lower-friction, cell-by-cell reproduction, use the Colab notebooks under `notebooks/` (NB1–NB7).
 
+### Regenerating paper figures 6 and 9
+
+Figures 6 (SLA layer weights) and 9 (confusion matrix) can be rebuilt without retraining, using the saved layer-weight arrays and LOSGO checkpoints:
+
+```bash
+python scripts/regenerate_paper_figures.py --only fig6   # no GPU needed
+python scripts/regenerate_paper_figures.py --only fig9   # requires GPU + checkpoints
+python scripts/regenerate_paper_figures.py               # both
+```
+
+Outputs are written to `${XHUBERT_SAVE_DIR}/figures/`.
+
 ### Important reproducibility note
 
 Before instantiating any HuBERT-based model, the code applies a **`pos_conv_embed` weight-norm fix** that is required for PyTorch ≥ 2.1 (see `utils.py`). Without this fix the positional convolution is silently re-initialised, degrading downstream accuracy by roughly 8 percentage points. All experiments in this repository use the fix.

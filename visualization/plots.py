@@ -85,14 +85,72 @@ def plot_exp3_comparison(df_exp3: pd.DataFrame, df_exp2: pd.DataFrame = None):
 
 
 def plot_confusion_matrix(y_true, y_pred, title="Confusion Matrix",
-                          filename="confusion.png"):
+                          filename="confusion.png", normalize=True,
+                          acc=None, f1=None):
+    """Plot a confusion matrix.
+
+    Parameters
+    ----------
+    normalize
+        If True (default), display row-normalised percentages, matching
+        Figure 9 of the paper. If False, display raw integer counts.
+    acc, f1
+        Optional overall accuracy and macro-F1 (in percent); when given
+        they are appended to the plot title on a second line.
+    """
     set_style()
-    cm = confusion_matrix(y_true, y_pred)
-    fig, ax = plt.subplots(figsize=(8, 7))
-    disp = ConfusionMatrixDisplay(cm, display_labels=config.EMOTION_NAMES)
-    disp.plot(ax=ax, cmap="Blues", values_format="d")
-    ax.set_title(title)
+    cm = confusion_matrix(y_true, y_pred).astype(float)
+    if normalize:
+        cm = cm / cm.sum(axis=1, keepdims=True) * 100.0
+        fmt = ".1f"
+        cbar_label = "Percentage (%)"
+    else:
+        fmt = "d"
+        cbar_label = "Count"
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    sns.heatmap(cm, annot=True, fmt=fmt, cmap="Blues",
+                xticklabels=config.EMOTION_NAMES,
+                yticklabels=config.EMOTION_NAMES,
+                linewidths=0.5, ax=ax, cbar_kws={"label": cbar_label})
+    full_title = title
+    if acc is not None and f1 is not None:
+        full_title += f"\nAcc = {acc:.1f}%  |  Macro-F1 = {f1:.1f}%"
+    ax.set_title(full_title, fontweight="bold")
+    ax.set_xlabel("Predicted label")
+    ax.set_ylabel("True label")
     plt.xticks(rotation=45, ha="right")
+    plt.yticks(rotation=0)
+    save_fig(fig, filename)
+
+
+def plot_sla_layer_weights(weights, filename="fig_sla_layer_weights.png"):
+    """Bar chart of learned SLA softmax weights across HuBERT layers.
+
+    Matches Figure 6 of the paper. `weights` is a 1-D array of length 13
+    (layer 0 = feature-projection output, layers 1-12 = Transformer
+    blocks). The peak layer is highlighted with a red border.
+    """
+    set_style()
+    weights = np.asarray(weights).ravel()
+    n = len(weights)
+    peak = int(np.argmax(weights))
+
+    fig, ax = plt.subplots(figsize=(11, 5))
+    bars = ax.bar(range(n), weights,
+                  color=plt.cm.viridis(weights / weights.max()),
+                  edgecolor="grey")
+    bars[peak].set_edgecolor("red")
+    bars[peak].set_linewidth(2.5)
+
+    ax.set_xlabel("HuBERT hidden layer "
+                  "(0 = feature-projection output, 12 = final Transformer layer)")
+    ax.set_ylabel(r"SLA weight $\alpha$ (after softmax)")
+    ax.set_title(f"Which HuBERT layers carry emotion information? "
+                 f"Layer {peak} receives the largest weight.",
+                 fontweight="bold", fontsize=11)
+    ax.set_xticks(range(n))
+    ax.grid(axis="y", alpha=0.3)
     save_fig(fig, filename)
 
 
