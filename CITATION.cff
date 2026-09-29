@@ -30,8 +30,11 @@ keywords:
   - gradient reversal
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.XXXXXXX
-    description: Zenodo archive of this release (replace with real DOI after first Zenodo publish)
+    value: 10.5281/zenodo.23044713
+    description: Zenodo concept DOI — resolves to the latest release across all versions
+  - type: doi
+    value: 10.5281/zenodo.23044714
+    description: Zenodo version DOI for v1.0.0 (this specific release)
 preferred-citation:
   type: article
   title: >

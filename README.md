@@ -188,9 +188,11 @@ If you use this code, please cite the paper:
 
 The software artifact itself is archived on Zenodo:
 
-> Nguyen, T. N., & Bui, T. H. (2026). *xHuBERT: A Selective Layer Aggregation Framework for Robust Speaker-Independent Speech Emotion Recognition (v1.0.0)*. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23044713.svg)](https://doi.org/10.5281/zenodo.23044713)
 
-Please update the DOI above after the first Zenodo release.
+> Nguyen, T. N., & Bui, T. H. (2026). *xHuBERT: A Selective Layer Aggregation Framework for Robust Speaker-Independent Speech Emotion Recognition*. Zenodo. https://doi.org/10.5281/zenodo.23044713
+
+The DOI above is the **concept DOI**, which always resolves to the latest release. To cite the exact version used to reproduce a specific result, use the version-specific DOI (v1.0.0: [10.5281/zenodo.23044714](https://doi.org/10.5281/zenodo.23044714)).
 
 ## License
 
