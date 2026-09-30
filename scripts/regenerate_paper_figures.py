@@ -42,9 +42,21 @@ from utils import ensure_dirs, load_checkpoint
 from visualization.plots import plot_sla_layer_weights, plot_confusion_matrix
 
 
-def regenerate_fig6(seed: int) -> bool:
-    pattern = os.path.join(config.EMB_DIR, f"layer_weights_fold*_seed{seed}.npy")
+def regenerate_fig6(seed: int | None = None) -> bool:
+    """Rebuild Figure 6 from the saved SLA layer-weight arrays.
+
+    By default aggregates every ``layer_weights_fold*_seed*.npy`` file
+    under ``config.EMB_DIR`` (6 folds x 3 seeds = 18 arrays for the paper
+    run), which matches the pooled estimate used in the manuscript. Pass
+    a specific ``seed`` to restrict the average to that seed only.
+    """
     import glob
+    if seed is None:
+        pattern = os.path.join(config.EMB_DIR, "layer_weights_fold*_seed*.npy")
+        label = "all seeds"
+    else:
+        pattern = os.path.join(config.EMB_DIR, f"layer_weights_fold*_seed{seed}.npy")
+        label = f"seed {seed}"
     files = sorted(glob.glob(pattern))
     if not files:
         print(f"[WARN] No layer-weight files found under {pattern}")
@@ -55,7 +67,9 @@ def regenerate_fig6(seed: int) -> bool:
     weights = np.stack([np.load(f) for f in files], axis=0)
     mean_w = weights.mean(axis=0)
     plot_sla_layer_weights(mean_w, filename="hubert_ft_layer_weights.png")
-    print(f"[INFO] Averaged {len(files)} folds; peak layer = {int(mean_w.argmax())}")
+    print(f"[INFO] Averaged {len(files)} arrays ({label}); "
+          f"peak = layer {int(mean_w.argmax())}, "
+          f"alpha = {mean_w.max():.4f}")
     return True
 
 
@@ -137,8 +151,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--only", choices=["fig6", "fig9", "both"],
                         default="both", help="Which figure to regenerate")
-    parser.add_argument("--seed", type=int, default=config.DEFAULT_SEED,
-                        help=f"Seed to use (default {config.DEFAULT_SEED})")
+    parser.add_argument("--seed", type=int, default=None,
+                        help="Restrict Figure 6 to this seed and use it for "
+                             "Figure 9. When omitted, Figure 6 pools every "
+                             f"seed and Figure 9 uses seed "
+                             f"{config.DEFAULT_SEED}.")
     args = parser.parse_args()
 
     ensure_dirs()
@@ -149,7 +166,8 @@ def main() -> int:
         ok &= regenerate_fig6(args.seed)
     if args.only in {"fig9", "both"}:
         print("\n=== Figure 9: Confusion matrix (LOSGO) ===")
-        ok &= regenerate_fig9(args.seed)
+        fig9_seed = args.seed if args.seed is not None else config.DEFAULT_SEED
+        ok &= regenerate_fig9(fig9_seed)
 
     return 0 if ok else 1
 
