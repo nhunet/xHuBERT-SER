@@ -266,9 +266,10 @@ def run_exp3(dataset: RavdessDataset = None, seeds: list[int] = None,
                         f"embeddings_test_fold{fold_idx}_seed{seed}.npy",
                     ), emb_test)
 
-                # Save checkpoint
+                # Save checkpoint (keyed by protocol so 5-fold CV and LOSGO
+                # do not overwrite each other)
                 if best_state is not None:
-                    save_checkpoint(best_state, "exp3", fold_idx, seed)
+                    save_checkpoint(best_state, exp_key, fold_idx, seed)
 
                 result = {
                     "Experiment": "Exp3",

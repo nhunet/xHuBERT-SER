@@ -79,10 +79,17 @@ def regenerate_fig9(seed: int) -> bool:
     all_true, all_pred = [], []
     for split in splits:
         fold_idx = split["fold_idx"]
+        # Try the protocol-keyed name first (produced after the exp3
+        # save_checkpoint fix); fall back to the older bare "exp3" name for
+        # runs that predate the fix.
         state = load_checkpoint("exp3_LOSGO", fold_idx, seed)
         if state is None:
-            print(f"[WARN] Missing checkpoint exp3_LOSGO_fold{fold_idx}_seed{seed}.pt "
-                  f"under {config.CKPT_DIR}; skipping fold")
+            state = load_checkpoint("exp3", fold_idx, seed)
+        if state is None:
+            print(f"[WARN] Missing checkpoint for fold {fold_idx} seed {seed} "
+                  f"(looked for exp3_LOSGO_fold{fold_idx}_seed{seed}.pt and "
+                  f"exp3_fold{fold_idx}_seed{seed}.pt under {config.CKPT_DIR}); "
+                  f"skipping fold")
             continue
 
         model = xHuBERT(use_sla=True, use_attention_pool=True).to(device)
